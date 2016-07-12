@@ -52,6 +52,15 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super initWithCoder: decoder];
+    if (self) {
+        // Initialization code
+        [self setUp];
+    }
+    return self;
+}
+
 - (void)setUp
 {
     // Init variables
@@ -95,7 +104,7 @@
     // Center
     CGRect rect = self.bounds;
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
-
+    
     // Radius
     CGFloat radius = MIN(center.x, center.y) - self.progressArcWidth / 2;
     
@@ -130,7 +139,7 @@
     
     // This will allow the color to be change in the middle of the duration period
     _shapeLayer.strokeColor = self.progressColor.CGColor;
-
+    
     return _shapeLayer;
 }
 
@@ -145,7 +154,7 @@
     if (self.currentProgress != self.lastProgress && self.animated) {
         // From value
         CGFloat fromValue = (1 * self.lastProgress) / self.currentProgress;
-
+        
         // Animation
         CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
         pathAnimation.delegate = self.delegate;
@@ -175,7 +184,7 @@
 
 - (void)setProgress:(CGFloat)progress duration:(CFTimeInterval)duration
 {
-
+    
     self.duration = duration;
     [self setProgress:progress animated:YES];
 }
@@ -184,12 +193,12 @@
 -(void)pause
 {
     
-
-     if (self.currentProgress !=0) {
+    
+    if (self.currentProgress !=0) {
         CFTimeInterval pausedTime = [self.shapeLayer convertTime:CACurrentMediaTime() fromLayer:nil];
         self.shapeLayer.speed = 0.0;
         self.shapeLayer.timeOffset = pausedTime;
-     } 
+    } 
     
 }
 
